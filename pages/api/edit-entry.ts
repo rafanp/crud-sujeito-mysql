@@ -5,21 +5,21 @@ import { query } from '../../lib/db'
 const filter = new Filter()
 
 const handler: NextApiHandler = async (req, res) => {
-  const { id, title, content } = req.body
+  const { id, name, email } = req.body
   try {
-    if (!id || !title || !content) {
+    if (!id || !name || !email) {
       return res
         .status(400)
-        .json({ message: '`id`,`title`, and `content` are all required' })
+        .json({ message: '`id`,`name`, and `email` are all required' })
     }
 
     const results = await query(
       `
-      UPDATE entries
-      SET title = ?, content = ?
+      UPDATE users
+      SET name = ?, email = ?
       WHERE id = ?
       `,
-      [filter.clean(title), filter.clean(content), id]
+      [filter.clean(name), filter.clean(email), id]
     )
 
     return res.json(results)

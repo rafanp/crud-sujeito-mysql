@@ -1,38 +1,24 @@
-import Skeleton from 'react-loading-skeleton'
-
-import Nav from '@/components/nav'
-import Container from '@/components/container'
 import Entries from '@/components/entries'
+import Link from 'next/link'
 
-import { useEntries } from '@/lib/swr-hooks'
+import { useUsers } from '@/lib/swr-hooks'
+import { Main, Content, Button } from './../styles/home'
 
-export default function IndexPage() {
-  const { entries, isLoading } = useEntries()
-
-  if (isLoading) {
-    return (
-      <div>
-        <Nav />
-        <Container>
-          <Skeleton width={180} height={24} />
-          <Skeleton height={48} />
-          <div className="my-4" />
-          <Skeleton width={180} height={24} />
-          <Skeleton height={48} />
-          <div className="my-4" />
-          <Skeleton width={180} height={24} />
-          <Skeleton height={48} />
-        </Container>
-      </div>
-    )
-  }
+const IndexPage = () => {
+  const { users } = useUsers()
 
   return (
-    <div>
-      <Nav />
-      <Container>
-        <Entries entries={entries} />
-      </Container>
-    </div>
+    <>
+      <Main>
+        <Content>
+          <Link href={'/newUser'}>
+            <Button>Criar</Button>
+          </Link>
+          <Entries entries={users} />
+        </Content>
+      </Main>
+    </>
   )
 }
+
+export default IndexPage;

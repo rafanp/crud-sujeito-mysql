@@ -14,6 +14,16 @@ export function useEntries() {
   }
 }
 
+export function useUsers() {
+  const { data, error } = useSWR(`/api/get-users`, fetcher)
+
+  return {
+    users: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export function useEntry(id: string) {
   return useSWR(`/api/get-entry?id=${id}`, fetcher)
 }
